@@ -1,70 +1,110 @@
-# F1-2026 Web
+# F1 2026 — Calendario Web (no oficial)
 
-Breve guía del proyecto y comandos útiles.
+Web ligera que muestra el calendario de la temporada F1 2026, las sesiones y una cuenta atrás hacia la próxima carrera.
+
+![Logo](public/logo.png)
+
+---
+
+**Estado**: Versión lista para producción. Estilos en CSS clásico (`style.css`).
+
+**Demo (pendiente)**: https://JoseAlvarezDev.github.io/f1-2026-web
+
+## Contenido
+- `index.html` — entrada HTML
+- `src/` — componentes React (`App.jsx`, `main.jsx`)
+- `public/` — assets estáticos (logos, fondos, sonidos)
+- `style.css` — hoja de estilos principal
+- `package.json` — scripts y dependencias
 
 ## Requisitos
-
-- Node.js 18+ (o versión LTS reciente)
+- Node.js 18+ (o LTS reciente)
 - npm
 
-## Comandos principales
+## Inicio rápido (desarrollo)
 
-- `npm run dev` — Inicia Vite en modo desarrollo.
-- `npm run build` — Genera el build de producción.
-- `npm run preview` — Sirve el build localmente.
+```bash
+git clone https://github.com/JoseAlvarezDev/f1-2026-web.git
+cd f1-2026-web
+npm install
+npm run dev
+```
 
-## Optimización de imágenes
+Abrir `http://localhost:5173` en tu navegador.
 
-Se añadió un script para optimizar/convertir imágenes a WebP usando `imagemin-cli`.
+## Build y preview
 
-- Ejecutar optimización:
+```bash
+npm run build
+npm run preview
+```
+
+El resultado de producción queda en la carpeta `dist/`.
+
+## Scripts útiles
+- `npm run dev` — servidor de desarrollo (Vite)
+- `npm run build` — build producción
+- `npm run preview` — servir build local
+- `npm run optimize-images` — convierte `public/*.(png|jpg|jpeg)` a `.webp` usando `imagemin-cli`
+
+## Accesibilidad y buenas prácticas
+- Tarjetas navegables por teclado (`role`, `tabIndex`, `aria-*`).
+- `alt` en logos e imágenes y `loading="lazy"` donde aplica.
+- `style.css` define variables de color para facilitar cambios de tema.
+
+## Optimizar imágenes
+Se incluye un script para generar `.webp` con `imagemin-cli`.
 
 ```bash
 npm run optimize-images
 ```
 
----
+Esto generará versiones `.webp` en `public/` sin eliminar los originales.
 
-NOTA: Este README fue actualizado automáticamente para reflejar el estado actual del proyecto.
+## Despliegue a GitHub Pages
 
-Resumen de cambios recientes
+Si quieres que yo lo haga desde aquí, puedo ejecutar los pasos. Si prefieres hacerlo tú:
 
-- El proyecto fue revertido a CSS clásico (`style.css`) tras una migración a Tailwind.
-- Se añadieron mejoras de accesibilidad y optimización de imágenes (script `optimize-images`).
-
-Instrucciones rápidas para crear y publicar el repositorio en GitHub (usar `gh`):
+1) Asegúrate de tener `gh` (GitHub CLI) y estar autenticado.
+2) Ejecuta (desde la raíz del repo):
 
 ```bash
-# Inicializar repo local si no está hecho
+# Inicializar repo local y push inicial si no está hecho
 git init
-git branch -M main
 git add .
 git commit -m "Initial commit: F1 2026 web"
 
-# Crear repo en GitHub y hacer push (reemplaza el nombre si prefieres otro)
+# Crear repo en GitHub y hacer push (reemplaza el owner/nombre si hace falta)
 gh repo create JoseAlvarezDev/f1-2026-web --public --source=. --remote=origin --push
 
-# Publicar build en GitHub Pages
+# Publicar build en gh-pages (opcional)
 npm run build
 mkdir -p /tmp/f1-pages-deploy
 cp -r dist/* /tmp/f1-pages-deploy/
 cd /tmp/f1-pages-deploy
 git init
-git checkout -b gh-pages
+if git rev-parse --verify origin/gh-pages >/dev/null 2>&1; then git checkout -b gh-pages; else git checkout -b gh-pages; fi
 git add .
 git commit -m "Deploy site: GitHub Pages"
 git remote add origin https://github.com/JoseAlvarezDev/f1-2026-web.git
 git push -u origin gh-pages --force
 ```
 
-Si quieres, ejecuto estos pasos desde aquí (veo que `gh` está autenticado con tu cuenta). Dime si lo hago ahora.
+Alternativa (si `gh` soporta Pages):
 
-Este comando ejecuta `npx imagemin "public/*.{png,jpg,jpeg}" --plugin=webp --out-dir=public --ext .webp` y generará archivos `.webp` en la carpeta `public` (no elimina los originales). Es ideal para convertir imágenes grandes como `background.png` y mejorar tiempos de carga.
+```bash
+gh pages deploy --dir=dist --branch=gh-pages --message "Deploy site"
+```
 
-Si quieres cambiar la estrategia (por ejemplo, sobreescribir archivos PNG o optimizar en lote con otros plugins), dímelo y lo ajusto.
+La URL será `https://JoseAlvarezDev.github.io/f1-2026-web`.
 
-## Siguientes pasos recomendados
+## Licencia
+Si quieres, puedo añadir un `LICENSE` (recomiendo MIT). Dime si lo añado.
 
-- Ejecutar auditoría de accesibilidad (axe) y resolver problemas reportados.
-- Comprimir/optimizar otros assets (logos, imágenes de circuitos).
-- Añadir un script CI para ejecutar `npm run optimize-images` previo al deploy.
+## Créditos
+- Desarrollo: Jose Alvarez — https://github.com/JoseAlvarezDev
+- Iconos: Material Icons (Google)
+
+---
+
+Si quieres que haga el push y publique la `gh-pages` ahora mismo, ejecuto los pasos (veo `gh` autenticado). También puedo añadir `LICENSE` y plantillas para issues/PRs.
